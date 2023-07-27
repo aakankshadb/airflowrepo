@@ -14,6 +14,7 @@ def printArray():
     arr=[1,2,3,4,5,6]
     print(arr)
 
+
 with DAG(dag_id="dag_version_1",
          start_date=datetime(2023,7,26),
          schedule_interval="@daily",

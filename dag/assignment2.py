@@ -8,9 +8,9 @@ default_args = {
     "retry_delay":timedelta(seconds=5)
                 }
 
-with DAG(dag_id="dag_version_2_v5",
-         start_date=datetime(2023,7,26),
-         schedule_interval="@daily",
+with DAG(dag_id="Assignment2",
+         start_date=datetime(2023,7,27),
+         schedule="@daily",
          default_args=default_args,
          catchup=False
         ) as dag:
@@ -18,7 +18,6 @@ with DAG(dag_id="dag_version_2_v5",
     task1 = BashOperator(
                         task_id="task1",
                         bash_command="echo Hello world! This is the first task"
-                        
                     )
     task2 = BashOperator(
                         task_id="task2",
@@ -26,18 +25,7 @@ with DAG(dag_id="dag_version_2_v5",
                     )
     task3 = BashOperator(
         task_id="task3",
-        bash_command="echo I am the third task and I will be running with task2 after task1"
+        bash_command="echo I am the third task and I will be running parallely with task2 after task1"
     )
-    # Task dependency Method1
-    # task1.set_downstream(task2)
-    # task1.set_downstream(task3)
 
-    # Task dependency Method2
-    # task1 >> task2
-    # task1 >> task3
-
-    # Task dependency Method3
-    # task1 >> [task2,task3]
-
-    task1 << [task2,task3]
-
+    task1 >> [task2,task3]
